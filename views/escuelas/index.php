@@ -1,24 +1,22 @@
 <?php
-  require_once 'app/controllers/UsuariosController.php';
-  $user = new UsuariosController();
+  require_once 'app/controllers/EscuelasController.php';
+  $school = new EscuelasController();
   session_start();
   if(isset($_POST['eliminar'])){
 		$id =  $_GET['id'];
-		$user->destroy($id);
+		$school->destroy($id);
   }
-
 ?>
-
 <div class="container">
-<h1>Practicante</h1>
+<h1>Escuela</h1>
 <div class="row" >
 		  <div class="col-8">
-              <a href="index.php?page=createusuario" class="btn btn-success pull-rigth ">Crear practicantes</a>
+              <a href="index.php?page=createescuela" class="btn btn-success pull-rigth ">Crear escuela</a>
              	
 		  </div>
 
 		  <div class="ml-auto col-4 ">
-		  	<form method="POST" action="index.php?page=usuario" autocomplete="off"> 
+		  	<form method="POST" action="index.php?page=escuela" autocomplete="off"> 
 		      <label for="search" >
 				<input class="form-control" type="text" name="search" placeholder="Indicio de busqueda">
 			  </label>
@@ -31,10 +29,10 @@
 		<thead>
 			<tr>			
 				 <th>Nombre</th>
-				 <th>Apellidos</th>
-				 <th>email</th>
-				 <th>Teléfono</th>
-				 <th>Escuela</th>
+				 <th>Dirección</th>
+				 <th>Telefono</th>
+				 <th>Email</th>
+				 <th>Encargado</th>
 				 <th>Acciones</th>
 			</tr> 
 		</thead>
@@ -43,15 +41,13 @@
 			<?php foreach ($users as $u): ?>
                 <tr>
                   <td> <?php echo $u['name'] ?> </td>
-                  <td><?php echo $u['paterno'] ?></td>
+                  <td><?php echo $u['direccion'] ?></td>
                   <td><?php echo $u['phone'] ?></td>
                   <td><?php echo $u['email'] ?></td>
-                  <td><?php echo $u['id_school'] ?></td>
-                
+                  <td><?php echo $u['encargado'] ?></td>
 				  <td>
-					   <a href="index.php?page=editpracticante&id=<?php echo $u['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar</a>
-
-					<form style="display: inline;" method="POST" action="index.php?page=practicante&id=<?php echo $u['id'] ?>" >
+					<a href="index.php?page=editescuela&id=<?php echo $u['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar</a>
+					<form style="display: inline;" method="POST" action="index.php?page=escuela&id=<?php echo $u['id'] ?>" >
 							<button type="submit" class="btn btn-outline-danger btn-sm"  name="eliminar">Eliminar</button>
 					</form>
 				</td>
@@ -68,7 +64,7 @@
         <ul class="pagination justify-content-center">
             <?php for($i=1; $i<=$section; $i++):  ?>
             <li class="page-item">
-                <a class="page-link" href="index.php?page=practicante&search=<?php echo $search ?>&p=<?php echo $i ?>">
+                <a class="page-link" href="index.php?page=escuela&search=<?php echo $search ?>&p=<?php echo $i ?>">
                     <?php echo $i ?>
                 </a>
             </li>
