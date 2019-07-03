@@ -48,6 +48,7 @@ if (!empty($page)) {
     $objeto = new $controller();
     $objeto->$view();
   }
+  
 } else {
   header('Location: index.php?page=login');
 }

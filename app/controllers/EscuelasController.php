@@ -1,28 +1,26 @@
 <?php
 require_once "app/models/Escuela.php";
-require_once 'app/Validator.php';
+require_once 'app/utilidades/Utilidades.php';
+require_once 'app/RequestValidator/Request.php';
 
 class EscuelasController {
 
     public function index(){
-        #refactor this
-        $users = new Escuela;
-        $inicio =0;
-        $cant = 5;
+        #incicializando los parametros
+        $schools = new Escuela;
+        $utilities = new Utilidades();
+        $startOfPaging = 0;
+        $amountOfThePaging = 5;
         $search = "";
-        
-
-        if(isset($_GET['p'])) $inicio = $this->pagination($_GET['p'],$cant);
-        $sql = "SELECT * FROM escuelas LIMIT $inicio,$cant";
-        
-        if(isset($_POST['search']) or isset($_GET['search'])){
-
-            $search = isset($_POST['search']) ? $_POST['search'] : $_GET['search'] ;
-            $sql = "SELECT * FROM escuelas WHERE name LIKE  '$search%' LIMIT $inicio,$cant";
-        }
-        
-        $section = $users->paginationescuela($search);
-        $users = $users->indexescuela($sql); 
+         
+        #Si existe una paginación entra en el método paginación para traer la cantidad de registros
+        if(isset($_GET['p'])) $startOfPaging = $utilities->pagination($_GET['p'],$amountOfThePaging);
+        #si existe una busqueda se asigna a la varible search
+        if(isset($_GET['search'])) $search =  $_GET['search'] ;
+        #trae el total de registros que existen en la tabla dependiendo de la consulta con la varible search; esto servira para el total de paginaciones
+        $section = $schools->paginationschool($search);
+        #trae los registros 
+        $schools = $schools->indexschool($search,$startOfPaging,$amountOfThePaging); 
   
         require_once('./views/layouts/header.php');
         require_once('./views/escuelas/index.php');
@@ -38,32 +36,13 @@ class EscuelasController {
     }
 
     public function store($datos){
-         #refactor this
-         $obj = new Validator();
-         $errores = [];
-         
-        if ($obj->validar_requerido($datos['name']) == false) {
-         $errores[] = 'El campo Nombre es obligatorio.';
-         }
-         if ($obj->validar_requerido($datos['direccion']) == false) {
-             $errores[] = 'El campo Direccion es obligatorio.';
-         }
-         
-         if ($obj->validar_requerido($datos['encargado']) == false) {
-             $errores[] = 'El campo Encargado es obligatorio.';
-         }
-       
-         if ($obj->validar_entero($datos['phone']) == false) {
-         $errores[] = 'El campo de Telefono debe ser un número.';
-         }
-       
-         if ($obj->validar_email($datos['email']) == false) {
-         $errores[] = 'El campo de Email tiene un formato no válido.';
-         }
+        
+         $validate = new Request(); 
+         $errores = $validate->validateschool($datos);
  
          if(empty($errores)){
-             $escuela = new Escuela();
-             $escuela->storeescuela($datos);
+             $school = new Escuela();
+             $school->storeschool($datos);
              session_destroy();
          }else{
             $_SESSION['errores'] = $errores;
@@ -75,7 +54,7 @@ class EscuelasController {
        
         $id = $_GET['id'];
         $school = new Escuela();
-        $school = $school->editescuela($id);
+        $school = $school->editschool($id);
       
         require_once('./views/layouts/header.php');
         require_once('./views/escuelas/edit.php');
@@ -83,33 +62,12 @@ class EscuelasController {
     }
 
     public function update($datos){
-        $obj = new Validator();
-        $errores = [];
-        
-       if ($obj->validar_requerido($datos['name']) == false) {
-        $errores[] = 'El campo Nombre es obligatorio.';
-        }
-        if ($obj->validar_requerido($datos['direccion']) == false) {
-            $errores[] = 'El campo Departamento es obligatorio.';
-        }
-        
-        if ($obj->validar_entero($datos['phone']) == false) {
-        $errores[] = 'El campo de Telefono debe ser un número.';
-        }
-      
-        if ($obj->validar_email($datos['email']) == false) {
-        $errores[] = 'El campo de Email tiene un formato no válido.';
-        }
-        if ($obj->validar_requerido($datos['encargado']) == false) {
-            $errores[] = 'El campo Encargado es obligatorio.';
-        }
-        if(!empty($errores)){
-
-            $_SESSION['errores'] = $errores;
-            session_destroy();
-        }else{
+        $validate = new Request(); 
+        $errores = $validate->validateschool($datos);
+       
+        if(empty($errores)){
             $school = new Escuela;
-            $school = $school->updateescuela($datos);
+            $school = $school->updateschool($datos);
             if(!$school){
                 $_SESSION['mensaje'] = "error en actualizacion";
                 session_destroy();   
@@ -117,12 +75,14 @@ class EscuelasController {
             header('Location: index.php?page=escuela');
             $_SESSION['mensaje'] = "actualizacion correcta";
             session_destroy();
-           
+        }else{
+            $_SESSION['errores'] = $errores;
+             session_destroy();
         }
     }
     public function destroy($id){
         $school = new Escuela();
-        if($school->destroyescuela($id)){
+        if($school->destroyschool($id)){
             $_SESSION['mensaje'] = "Escuela eliminada correctamente";
             header('Location: index.php?page=escuela');
             session_destroy();
@@ -131,17 +91,4 @@ class EscuelasController {
              session_destroy();
         }
     }
-
-    public function pagination($page,$cant){
-        #refactor this
-        if($page == 1 or $page == 0){
-            $inicio = 0;
-        }else{
-            $inicio = $page*$cant-$cant;
-        }   
-        return $inicio;
-    }
-
-   
-    
 }

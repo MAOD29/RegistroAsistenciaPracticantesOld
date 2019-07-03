@@ -12,12 +12,10 @@
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
 
     <title>INICIO</title>
-
-
 </head>
 <body>
 
-<nav class="nav">
+    <nav class="nav">
         <ul class="menu-fixed">
             <li class="li"><a class="a" href="#"><i class="icono izquierda fas fa-home"></i> Home</a></li>
             <li class="li"><a class="a"href="#"><i class="icono izquierda fas fa-clipboard-list"></i> Asistencias</a></li>
@@ -26,7 +24,7 @@
             <li class="li"><a class="a" href="index.php?page=escuela"> <i class="icono izquierda fas fa-school"></i> Escuelas</a></li>
             <li class="li"><a class="a" href="index.php?page=usuario"> <i class="icono izquierda fas fa-user-graduate"></i> Asesores</a></li>
         </ul>
-</nav>
+    </nav>
 
-<main class="contenedor">
+    <main class="contenedor">
     

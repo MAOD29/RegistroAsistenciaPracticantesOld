@@ -1,56 +1,49 @@
 <?php
 require_once 'app/models/Usuario.php';
-require_once 'app/Validator.php';
+require_once 'app/utilidades/Utilidades.php';
+require_once 'app/RequestValidator/Request.php';
 
 class UsuariosController
 {
     public function login(){
 
         require_once('./views/login/login.php');
-    
     }    
 
     public function loginAcceso($datos){
        session_start();
         $user = new Usuario();
         $respuesta = $user->login($datos['user'], $datos['password']);
-        var_dump($respuesta);
-		if ($respuesta) {
-            $_SESSION['id_usuario'] = $respuesta['id'];
+        if ($respuesta) {
+            #$_SESSION['id_usuario'] = $respuesta['id'];
             $_SESSION['id_rol'] = $respuesta['id_rol'];
         
-			if ($_SESSION['id_rol'] == 1) {
-				header('Location: index.php?page=index');
+            if ($_SESSION['id_rol'] == 1) {
+                header('Location: index.php?page=index');
                 die();
-			} else {
+            } else {
               echo "Location: index.php?page=login";
                 die();
-                
-			}
-		}else{
-            echo "no tiene permiso";
+                }
+        }else{
+            echo "Usuario y/o contraseña incorrectos";
         }
     }
 
     public function index(){
-        #refactor this
+        #inicializando los valores
         $users = new Usuario;
-        $inicio =0;
-        $cant = 5;
+        $utilities = new Utilidades();
+        $startOfPaging =0;
+        $amountOfThePaging = 5;
         $search = "";
-       
-
-        if(isset($_GET['p'])) $inicio = $this->pagination($_GET['p'],$cant);
-        $sql = "SELECT * FROM usuarios LIMIT $inicio,$cant";
-        
-        if(isset($_POST['search']) or isset($_GET['search'])){
-
-            $search = isset($_POST['search']) ? $_POST['search'] : $_GET['search'] ;
-            $sql = "SELECT * FROM usuarios WHERE name LIKE  '$search%' LIMIT $inicio,$cant";
-        }
+        #asignando el inicio de de los articulos a paginar
+        if(isset($_GET['p'])) $startOfPaging = $utilities->pagination($_GET['p'],$amountOfThePaging);
+        #asignando la busqueda si existe
+        if(isset($_GET['search'])) $search =  $_GET['search'] ;
         
         $section = $users->paginationuser($search);
-        $users = $users->indexuser($sql); 
+        $users = $users->indexuser($search,$startOfPaging,$amountOfThePaging); 
         
         require_once('./views/layouts/header.php');
         require_once('./views/user/index.php');
@@ -69,33 +62,13 @@ class UsuariosController
     
     public function store($datos){
         #refactor this
-        $obj = new Validator();
-        $errores = [];
-        
-       if ($obj->validar_requerido($datos['name']) == false) {
-        $errores[] = 'El campo Nombre es obligatorio.';
-        }
-        if ($obj->validar_requerido($datos['department']) == false) {
-            $errores[] = 'El campo Departamento es obligatorio.';
-        }
-        if ($obj->validar_requerido($datos['user']) == false) {
-            $errores[] = 'El campo Usuario es obligatorio.';
-        }
-        if ($obj->validar_requerido($datos['password']) == false) {
-            $errores[] = 'El campo Departamento es obligatorio.';
-        }
-      
-        if ($obj->validar_entero($datos['phone']) == false) {
-        $errores[] = 'El campo de Telefono debe ser un número.';
-        }
-      
-        if ($obj->validar_email($datos['email']) == false) {
-        $errores[] = 'El campo de Email tiene un formato no válido.';
-        }
+        $validate = new Request(); 
+        $errores = $validate->validaruser($datos);
 
         if(empty($errores)){
-            $usuario = new Usuario();
-            $usuario->storeuser($datos);
+            $user = new Usuario();
+            $user->storeuser($datos);
+            
             session_destroy();
         }else{
            $_SESSION['errores'] = $errores;
@@ -117,36 +90,10 @@ class UsuariosController
     }
 
     public function update($datos){
-        $obj = new Validator();
-        $errores = [];
-        
-       if ($obj->validar_requerido($datos['name']) == false) {
-        $errores[] = 'El campo Nombre es obligatorio.';
-        }
-        if ($obj->validar_requerido($datos['department']) == false) {
-            $errores[] = 'El campo Departamento es obligatorio.';
-        }
-        if ($obj->validar_requerido($datos['user']) == false) {
-            $errores[] = 'El campo Usuario es obligatorio.';
-        }
-        if ($obj->validar_requerido($datos['password']) == false) {
-            $errores[] = 'El campo Departamento es obligatorio.';
-        }
-      
-        if ($obj->validar_entero($datos['phone']) == false) {
-        $errores[] = 'El campo de Telefono debe ser un número.';
-        }
-      
-        if ($obj->validar_email($datos['email']) == false) {
-        $errores[] = 'El campo de Email tiene un formato no válido.';
-        }
-        
-        if(!empty($errores)){
-
-            $_SESSION['errores'] = $errores;
-            session_destroy();
-            
-        }else{
+        $validate = new Request(); 
+        $errores = $validate->validateuser($datos);
+       
+        if(empty($errores)){
             $user = new Usuario;
             $user = $user->updateuser($datos);
             
@@ -154,10 +101,14 @@ class UsuariosController
                 $_SESSION['mensaje'] = "error en actualizacion";
                 session_destroy();   
             }
-            header('Location: index.php?page=usuario');
+           # header('Location: index.php?page=usuario');
             $_SESSION['mensaje'] = "actualizacion correcta";
             session_destroy();
            
+            
+        }else{
+            $_SESSION['errores'] = $errores;
+            session_destroy();
         }
     }
 
@@ -172,15 +123,7 @@ class UsuariosController
              session_destroy();
         }
     }
-    public function pagination($page,$cant){
-        #refactor this
-        if($page == 1 or $page == 0){
-            $inicio = 0;
-        }else{
-            $inicio = $page*$cant-$cant;
-        }   
-        return $inicio;
-    }
+   
    
 }
 

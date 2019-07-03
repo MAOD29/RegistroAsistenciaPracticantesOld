@@ -9,25 +9,27 @@ class Usuario extends ModeloBase {
    
     public function login($user, $password) {
         $db = new ModeloBase();
-        return $respuesta = $db->login($user,$password);
+        return $db->login($user,$password);
        
     }
     
     public function storeuser($datos){
 
         $db = new ModeloBase();
-		$datos['id_rol'] = 1;
-		$insertar = $db->store('usuarios', $datos);
-		if ($insertar) {
-			$_SESSION['mensaje'] = 'Registro exitoso';
-        }
+        $datos['id_rol'] = 2;
+        $insert = $db->store('usuarios', $datos);
+        if ($insert) $_SESSION['mensaje'] = 'Registro exitoso';
         
     }
 
 
-    public function indexuser($sql) {
-
+    public function indexuser($search,$startOfPaging,$amountOfThePaging) {
         $db = new ModeloBase();
+        if(empty($search)){
+            $sql = "SELECT * FROM usuarios LIMIT $startOfPaging,$amountOfThePaging";
+        }else{
+            $sql = "SELECT * FROM usuarios WHERE name LIKE  '$search%' LIMIT $startOfPaging,$amountOfThePaging";
+        }
         return  $db->index($sql);
      
     }
@@ -62,7 +64,7 @@ class Usuario extends ModeloBase {
         return $section;
          
     }
-
+ 
 }
 
 ?>

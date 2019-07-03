@@ -1,0 +1,1 @@
+$botonEliminar = document.getElementById('delete');
