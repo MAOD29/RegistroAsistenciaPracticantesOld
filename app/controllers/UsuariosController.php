@@ -63,7 +63,7 @@ class UsuariosController
     public function store($datos){
         #refactor this
         $validate = new Request(); 
-        $errores = $validate->validaruser($datos);
+        $errores = $validate->validateuser($datos);
 
         if(empty($errores)){
             $user = new Usuario();
@@ -103,6 +103,7 @@ class UsuariosController
             }
            # header('Location: index.php?page=usuario');
             $_SESSION['mensaje'] = "actualizacion correcta";
+
             session_destroy();
            
             
@@ -116,7 +117,7 @@ class UsuariosController
         $user = new Usuario();
         if($user->destroyuser($id)){
             $_SESSION['mensaje'] = "Asesor eliminado correctamente";
-            header('Location: index.php?page=usuario');
+            #header('Location: index.php?page=usuario');
             session_destroy();
         }else {
             $_SESSION['mensaje'] = "Error al eliminar";
