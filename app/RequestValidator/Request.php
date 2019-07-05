@@ -33,7 +33,21 @@ class Request extends Validator
 
     } 
     
+    public function validatestudent($datos){
+        $errores = [];
 
+        $errores = $this->require($datos);
+        $email = $this->validate_email($datos['email']);
+        $phone = $this->validate_telefono($datos['phone']);
+      
+     
+        if($email) $errores['email'] = $email;
+        if($phone) $errores['phone'] = $phone;
+      
+
+       return $errores;
+
+    } 
     
 
    

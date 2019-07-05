@@ -4,7 +4,6 @@
 $page = $_GET['page'];
 
 if (!empty($page)) {
-  #http://curso-php.test/cms/index.php?page=buscar
 
   $router = array(
     #login
@@ -21,8 +20,12 @@ if (!empty($page)) {
     /////////////////////////////////////////////////////////////////////
     #index practicantes
     'practicante' => array('model' => 'Practicante', 'view' => 'index', 'controller' => 'PracticantesController'),
+     #create practicantes
+     'createstudent' => array('model' => 'Practicante', 'view' => 'create', 'controller' => 'PracticantesController'),
     #edit practicante
-    'editpracticante' => array('model' => 'Practicante', 'view' => 'edit', 'controller' => 'PracticanteController'),
+    'editstudent' => array('model' => 'Practicante', 'view' => 'edit', 'controller' => 'PracticantesController'),
+     #delete practicante
+     'deletestudent' => array('model' => 'Practicante', 'view' => 'edit', 'controller' => 'PracticantesController'),
     ////////////////////////////////////////////////////////////////////
     #index escuelas
     'escuela' => array('model' => 'Escuela', 'view' => 'index', 'controller' => 'EscuelasController'),

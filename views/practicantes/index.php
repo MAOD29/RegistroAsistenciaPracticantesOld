@@ -1,10 +1,10 @@
 <?php
   require_once 'app/controllers/UsuariosController.php';
-  $user = new UsuariosController();
+  $s = new PracticantesController();
   session_start();
   if(isset($_POST['eliminar'])){
-		$id =  $_GET['id'];
-		$user->destroy($id);
+    $id =  $_GET['id'];
+    $s->destroy($id);
   }
 
 ?>
@@ -13,15 +13,15 @@
   <h1>Practicante</h1>
   <div class="row" >
     <div class="col-8">
-      <a href="index.php?page=createusuario" class="btn btn-success pull-rigth ">Crear practicantes</a>
+      <a href="index.php?page=createstudent" class="btn btn-success pull-rigth ">Crear practicantes</a>
     </div>
 
     <div class="ml-auto col-4 ">
-      <form method="POST" action="index.php?page=usuario" autocomplete="off"> 
+    <form method="GET" action="index.php" autocomplete="off"> 
         <label for="search" >
-          <input class="form-control" type="text" name="search" placeholder="Indicio de busqueda">
+        <input class="form-control" type="text" name="search" placeholder="Indicio de busqueda">
         </label>
-        <input class="btn btn-primary" type="submit" value="Buscar">
+        <input class="btn btn-primary" type="submit" name="page" value="practicante">
       </form>
     </div>
   </div>
@@ -38,23 +38,21 @@
       </tr> 
     </thead>
     <tbody>
-      <?php if (!empty($users)): ?>
-        <?php foreach ($users as $u): ?>
+      <?php if (!empty($students)): ?>
+        <?php foreach ($students as $student): ?>
           <tr>
-            <td> <?php echo $u['name'] ?> </td>
-            <td><?php echo $u['paterno'] ?></td>
-            <td><?php echo $u['phone'] ?></td>
-            <td><?php echo $u['email'] ?></td>
-            <td><?php echo $u['id_school'] ?></td>
+            <td> <?php echo $student['name'] ?> </td>
+            <td><?php echo $student['paterno'] ?></td>
+            <td><?php echo $student['phone'] ?></td>
+            <td><?php echo $student['email'] ?></td>
+            <td><?php echo $student['id_school'] ?></td>
             <td>
               <a 
-                href="index.php?page=editpracticante&id=<?php echo $u['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar
+                href="index.php?page=editstudent&id=<?php echo $student['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar
               </a>
-              <form style="display: inline;" method="POST" 
-                    action="index.php?page=practicante&id=<?php echo $u['id']
-               ?>" >
-                <button type="submit" class="btn btn-outline-danger btn-sm"  name="eliminar">Eliminar</button>
-              </form>
+              <button type="button" class=" btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+                Eliminar
+              </button>
             </td>
           </tr>
         <?php endforeach; ?>
@@ -80,4 +78,23 @@
     <?php echo $_SESSION['mensaje']?>
     </div>
   <?php endif; ?>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">¿Desea eliminar?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <form style="display: inline;" method="POST" action="index.php?page=practicante&id=<?php echo $student['id'] ?>" >
+        <button type="submit" id="delete" class=" btn btn-danger"  name="eliminar">Eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

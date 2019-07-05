@@ -1,40 +1,101 @@
 <?php
 require_once("app/models/Practicante.php");
-
+require_once 'app/utilidades/Utilidades.php';
+require_once 'app/RequestValidator/Request.php';
 
 class PracticantesController {
 
     public function index(){
-        #refactor this
-        $users = new Practicante;
-        $inicio =0;
-        $cant = 5;
+        #incicializando los parametros
+        $students = new Practicante;
+        $utilities = new Utilidades();
+        $startOfPaging = 0;
+        $amountOfThePaging = 5;
         $search = "";
         
-
-        if(isset($_GET['p'])) $inicio = $this->pagination($_GET['p'],$cant);
-        $sql = "SELECT * FROM practicantes LIMIT $inicio,$cant";
-        
-        if(isset($_POST['search']) or isset($_GET['search'])){
-
-            $search = isset($_POST['search']) ? $_POST['search'] : $_GET['search'] ;
-            $sql = "SELECT * FROM practicantes WHERE name LIKE  '$search%' LIMIT $inicio,$cant";
-        }
-        
-        $section = $users->paginationpracticante($search);
-        $users = $users->indexpracticante($sql); 
+        #Si existe una paginación entra en el método paginación para traer la cantidad de registros
+        if(isset($_GET['p'])) $startOfPaging = $utilities->pagination($_GET['p'],$amountOfThePaging);
+        #si existe una busqueda se asigna a la varible search
+        if(isset($_GET['search'])) $search =  $_GET['search'] ;
+        #trae el total de registros que existen en la tabla dependiendo de la consulta con la varible search; esto servira para el total de paginaciones
+        $section = $students->paginationstudent($search);
+        #trae los registros 
+        $students = $students->indexstudent($search,$startOfPaging,$amountOfThePaging); 
+    
   
         require_once('./views/layouts/header.php');
         require_once('./views/practicantes/index.php');
         require_once('./views/layouts/footer.php');
     }
-    public function pagination($page,$cant){
-        #refactor this
-        if($page == 1 or $page == 0){
-            $inicio = 0;
-        }else{
-            $inicio = $page*$cant-$cant;
-        }   
-        return $inicio;
+    public function show(){
+       
+        
     }
+    public function create(){
+        require_once('./views/layouts/header.php');
+        require_once('./views/practicantes/create.php');
+        require_once('./views/layouts/footer.php');
+    }
+    
+    public function store($datos){
+        #refactor this
+        $validate = new Request(); 
+        $errores = $validate->validatestudent($datos);
+
+        if(empty($errores)){
+            $practicante = new Practicante();
+            $practicante->storestudent($datos);
+            session_destroy();
+        }else{
+           $_SESSION['errores'] = $errores;
+           session_destroy();
+           
+        }
+    }
+
+
+    public function edit(){
+       
+        $id = $_GET['id'];
+        $student = new Practicante();
+        $student = $student->editstudent($id);
+      
+        require_once('./views/layouts/header.php');
+        require_once('./views/practicantes/edit.php');
+        require_once('./views/layouts/footer.php');
+    }
+
+    public function update($datos){
+        $validate = new Request(); 
+        $errores = $validate->validatestudent($datos);
+       
+        if(empty($errores)){
+            $student = new Practicante;
+            $student = $student->updatestudent($datos);
+            
+            if($student){
+                $_SESSION['mensaje'] = "actualizacion correcta";
+                session_destroy();
+                # header('Location: index.php?page=usuario');
+            }            
+        }else{
+            $_SESSION['errores'] = $errores;
+            session_destroy();
+        }
+    }
+
+    public function destroy($id){
+        $student = new Practicante();
+        if($student->destroystudent($id)){
+            $_SESSION['mensaje'] = "Practicante eliminado correctamente";
+            #header('Location: index.php?page=usuario');
+            session_destroy();
+        }else {
+            $_SESSION['mensaje'] = "Error al eliminar";
+             session_destroy();
+        }
+    }
+
+    
+    
 }
