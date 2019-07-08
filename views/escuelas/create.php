@@ -21,8 +21,11 @@
     <form method="POST" action="index.php?page=createescuela" autocomplete="off" >
         <?php include_once "form.php" ?>
         <button class="btn btn-primary" name="registrar">Registrar</button>
+
         <?php if (isset($_SESSION['mensaje'])): ?>
-            <div class='alert alert-primary' role='alert'><? echo $_SESSION['mensaje'] ?></div>
-        <?php endif;  ?>
+            <div class="alert alert-success" role="alert">
+                <?php echo $_SESSION['mensaje']?>
+            </div>
+        <?php endif; ?>
     </form>
 </div>

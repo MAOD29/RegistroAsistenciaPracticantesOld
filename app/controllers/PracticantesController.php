@@ -1,5 +1,5 @@
 <?php
-require_once("app/models/Practicante.php");
+require_once "app/models/Practicante.php";
 require_once 'app/utilidades/Utilidades.php';
 require_once 'app/RequestValidator/Request.php';
 
@@ -32,6 +32,10 @@ class PracticantesController {
         
     }
     public function create(){
+        $options = new Practicante();
+        $schools = $options->getAll('escuelas');
+        $advisers = $options->getAll('usuarios');
+
         require_once('./views/layouts/header.php');
         require_once('./views/practicantes/create.php');
         require_once('./views/layouts/footer.php');
@@ -58,6 +62,8 @@ class PracticantesController {
        
         $id = $_GET['id'];
         $student = new Practicante();
+        $schools = $student->getAll('escuelas');
+        $advisers = $student->getAll('usuarios');
         $student = $student->editstudent($id);
       
         require_once('./views/layouts/header.php');
@@ -96,6 +102,7 @@ class PracticantesController {
         }
     }
 
+    
     
     
 }

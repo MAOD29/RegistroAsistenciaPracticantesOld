@@ -10,7 +10,7 @@ class ModeloBase extends DB {
 
     public function store($table, $datos) {     
         $conexion = parent::conexion();   
-        try {
+        try { 
         $keys = array_keys($datos);
         $sql = "INSERT INTO $table (".implode(", ", $keys).") \n";
         $sql .= "VALUES ( :".implode(", :",$keys).")";

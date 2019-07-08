@@ -57,4 +57,9 @@ class Practicante extends ModeloBase
         return $section;
          
     }
+    public function getAll($table){
+        $sql = "SELECT id,name from $table";
+        $db = new ModeloBase();
+        return $db->index($sql);
+    }
 }
