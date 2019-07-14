@@ -48,6 +48,12 @@ class Request extends Validator
        return $errores;
 
     } 
+    public function validateasistencia($datos){
+        $errores = [];
+        $errores = $this->require($datos);
+       return $errores;
+
+    } 
     
 
    

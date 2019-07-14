@@ -18,7 +18,7 @@
     <nav class="nav">
         <ul class="menu-fixed">
             <li class="li"><a class="a" href="#"><i class="icono izquierda fas fa-home"></i> Home</a></li>
-            <li class="li"><a class="a"href="#"><i class="icono izquierda fas fa-clipboard-list"></i> Asistencias</a></li>
+            <li class="li"><a class="a"href="index.php?page=asistencia"><i class="icono izquierda fas fa-clipboard-list"></i> Asistencias</a></li>
             <li class="li"><a class="a" href="index.php?page=practicante"><i class="icono izquierda fas fa-clipboard"></i> Practicantes</a></li>
             <li class="li"><a class="a" href="#"><i class="icono izquierda  fab fa-font-awesome-flag"></i> Incidencias</a></li>
             <li class="li"><a class="a" href="index.php?page=escuela"> <i class="icono izquierda fas fa-school"></i> Escuelas</a></li>

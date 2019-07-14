@@ -39,6 +39,16 @@ class ModeloBase extends DB {
             echo "Error: ".$e->getMessage();
         }
     }
+    public function show($sql) {
+        
+        $conexion = parent::conexion();   
+        try {
+            return  $conexion->query($sql)->fetch();
+        
+        } catch (PDOException $e){
+            echo "Error: ".$e->getMessage();
+        }
+    }
 
     public function edit($table, $id) {
         

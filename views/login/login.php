@@ -21,7 +21,9 @@
     <title>INICIO</title>
 </head>
 <body>
-
+    <div class="container">
+        <a class="btn btn-success" href="index.php?page=createasistencia">IR A RELOJ</a>
+    </div>
     <div class="container">
     <form action="index.php?page=login" method="POST" >
         <div class="form-group">

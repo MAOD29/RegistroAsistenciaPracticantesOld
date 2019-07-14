@@ -33,6 +33,13 @@ if (!empty($page)) {
     'createescuela' => array('model' => 'Escuela', 'view' => 'create', 'controller' => 'EscuelasController'),
     #modificar escuela
     'editescuela' => array('model' => 'Escuela', 'view' => 'edit', 'controller' => 'EscuelasController'),
+    ////////////////////////////////////////////////////////////////////
+    #index assitencias
+    'asistencia' => array('model' => 'Asistencia', 'view' => 'index', 'controller' => 'AsistenciasController'),
+    # vista Crear una asistencia
+    'createasistencia' => array('model' => 'Asistencia', 'view' => 'create', 'controller' => 'AsistenciasController'),
+    #modificar asistencia
+    'editasistencia' => array('model' => 'Asistencia', 'view' => 'edit', 'controller' => 'AsistenciasController'),
 
     
   );
