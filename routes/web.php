@@ -40,7 +40,16 @@ if (!empty($page)) {
     'createasistencia' => array('model' => 'Asistencia', 'view' => 'create', 'controller' => 'AsistenciasController'),
     #modificar asistencia
     'editasistencia' => array('model' => 'Asistencia', 'view' => 'edit', 'controller' => 'AsistenciasController'),
-
+    ////////////////////////////////////////////////////////////////////
+    #index incidencias
+    'incidencia' => array('model' => 'Incidencia', 'view' => 'index', 'controller' => 'IncidenciasController'),
+    # vista Crear una escuela
+    'createincidencia' => array('model' => 'Incidencia', 'view' => 'create', 'controller' => 'IncidenciasController'),
+    #modificar escuela
+    'editincidencia' => array('model' => 'Incindencia', 'view' => 'edit', 'controller' => 'IncidenciasController'),
+    #search 
+    'searchincidencia' => array('model' => 'Incindencia', 'view' => 'search', 'controller' => 'IncidenciasController'),
+    
     
   );
 

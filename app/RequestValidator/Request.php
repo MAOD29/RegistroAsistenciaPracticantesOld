@@ -54,6 +54,12 @@ class Request extends Validator
        return $errores;
 
     } 
+    public function validateincidencia($datos){
+        $errores = [];
+        $errores = $this->require($datos);
+       return $errores;
+
+    } 
     
 
    
