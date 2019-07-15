@@ -54,7 +54,7 @@
             <td><?php echo $asistencia['horast'] ?></td>
             <td>
               <a 
-                href="index.php?page=editasistencia&id=<?php echo $asistencia['id']?>&fecha=<?php echo $asistencia['fecha'] ?>" class='btn btn-outline-primary btn-sm'>Editar
+                href="index.php?page=editasistencia&id=<?php echo $asistencia['id_asistencia']?>" class='btn btn-outline-primary btn-sm'>Editar
               </a>
             
             </td>

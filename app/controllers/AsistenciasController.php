@@ -65,9 +65,9 @@ class AsistenciasController {
     public function edit(){
        
         $id = $_GET['id'];
-        $fecha = $_GET['fecha'];
+      
         $asistencia = new Asistencia();
-        $asistencia = $asistencia->editasistencia($id,$fecha);
+        $asistencia = $asistencia->editasistencia($id);
       
         require_once('./views/layouts/header.php');
         require_once('./views/asistencias/edit.php');

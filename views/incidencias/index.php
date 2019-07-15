@@ -16,9 +16,9 @@
         <div class="ml-auto col-4 ">
             <form method="GET" action="index.php" autocomplete="off"> 
                 <label for="search" >
-                    <input class="form-control" type="text" name="search" placeholder="Indicio de busqueda">
+                    <input class="form-control" type="text" name="search" placeholder="Ingrese ID">
                 </label>
-                <input class="btn btn-primary" type="submit" name="page" value="escuela">
+                <button class="btn btn-primary" type="submit" name="page" value="incidencia">Buscar </button>
             </form>
         </div>
     </div>
@@ -26,6 +26,7 @@
     <table class="table">
         <thead>
             <tr>
+         
                 <th>ID Practicante</th>
                 <th>Nombre</th>
                 <th>Incidencia</th>
@@ -42,10 +43,11 @@
                         <td><?php echo $s['titulo'] ?></td>
                         <td><?php echo $s['date'] ?></td>
                         <td>
-                            <a href="index.php?page=editincidencia&id=<?php echo $s['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar</a>
-                            <button type="button" class=" btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
-                                Eliminar
-                            </button>
+                            <a href="index.php?page=editincidencia&id=<?php echo $s['id_incidencia'] ?>" class='btn btn-outline-primary btn-sm'>Editar</a>
+                            <form style="display: inline;" method="POST" action="index.php?page=incidencia&id=<?php echo $s['id_incidencia']?>" >
+                                <button type="submit" id="delete" class=" btn btn-outline-danger btn-sm" name="eliminar">Eliminar</button>
+                             </form>
+                            
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -75,7 +77,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"       aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -86,8 +88,10 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		<form style="display: inline;" method="POST" action="index.php?page=incidencia&id=<?php echo $s['id'] ?>" >
-        <button type="submit" id="delete" class=" btn btn-danger"  name="eliminar">Eliminar</button>
+        <form style="display: inline;" method="POST" 
+            action="index.php?page=incidencia&id=<?php echo $s['id_incidencia']?>" >
+            <button type="submit" id="delete" class=" btn btn-danger" name="eliminar"> 
+                <?php echo $s['id_incidencia']  ?>Eliminar</button>
         </form>
       </div>
     </div>

@@ -11,19 +11,19 @@
 <div class="row fuente">
     <div class="col-4">
         <label for="codigo">Código</label>
-        <input type="text" readonly class="form-control-plaintext" name="id_practicante" value="<?php if(isset($incidencia['id'])) echo $incidencia['id'];?>">
+        <input type="text" readonly class="form-control" name="id_practicante" value="<?php if(isset($incidencia['id'])) echo $incidencia['id'];?>">
         <span class="error"><?php echo$error('id') ?></span>
     </div>
     <div class="col-4">
         <label for="nombre">Nombre</label>
-        <input type="text" readonly class="form-control-plaintext" 
+        <input type="text" readonly class="form-control" 
         value="<?php if(isset($incidencia['name'])) echo $incidencia['name'];?>">
         <span class="error"><?php echo$error('name') ?></span>
     </div>
 
     <div class="col-4">
         <label for="paterno" >Apellidos</label>
-        <input type="text" readonly class="form-control-plaintext" 
+        <input type="text" readonly class="form-control" 
         value="<?php if(isset($incidencia['paterno'])) echo $incidencia['paterno'];?>">
         <span class="error"><?php echo$error('paterno') ?></span>
     </div>        

@@ -8,16 +8,14 @@ class Incidencia extends ModeloBase
 
     public function indexincidencia($search,$startOfPaging,$amountOfThePaging) {
         $db = new ModeloBase();
-        $sql = "SELECT practicantes.id,practicantes.name,incidencias.titulo,incidencias.date
+        $sql = "SELECT practicantes.id,practicantes.name,incidencias.titulo,incidencias.date,incidencias.id as id_incidencia
         FROM incidencias
         left JOIN practicantes";
 
         if(empty($search)){
-            $sql .= "
-            ON incidencias.id_practicante = practicantes.id LIMIT $startOfPaging,$amountOfThePaging";
+            $sql .= " ON incidencias.id_practicante = practicantes.id LIMIT $startOfPaging,$amountOfThePaging";
         }else{
-            $sql .= "
-            ON incidencias.id_practicante = practicantes.id WHERE practicantes.id = $search LIMIT $startOfPaging,$amountOfThePaging";
+            $sql .= " ON incidencias.id_practicante = practicantes.id Where practicantes.id = $search LIMIT $startOfPaging,$amountOfThePaging";
         }
         return  $db->index($sql);
      
@@ -36,21 +34,24 @@ class Incidencia extends ModeloBase
     
     public function editincidencia($id){
         $db = new ModeloBase();
-        $sql = "SELECT practicantes.id,practicantes.name,practicantes.paterno,incidencias.titulo,incidencias.descripcion,incidencias.date
+
+        $sql = "SELECT practicantes.id,practicantes.name,practicantes.paterno,incidencias.titulo,incidencias.descripcion,incidencias.date,incidencias.id as id_incidencia
         FROM incidencias
         left JOIN practicantes
-        ON incidencias.id_practicante = practicantes.id WHERE practicantes.id = $id ";
-        return $db->edit('incidencias', $id);
+        ON incidencias.id_practicante = practicantes.id WHERE incidencias.id = $id ";
+
+        return $db->show($sql);
       
     }
     public function updateincidencia($datos){
         $db = new ModeloBase();
-        $sql = "UPDATE incidencias SET name=:name, direccion=:direccion, email=:email, phone=:phone, encargado=:encargado  WHERE id=:id;";
+        $sql = "UPDATE incidencias SET titulo=:titulo, descripcion=:descripcion, date=:date WHERE id=:id;";
 
         return $db->update($sql,$datos);
     }
     public function destroyincidencia($id){
         $db = new ModeloBase();
+        var_dump($id);
        return $db->destroy('incidencias', $id);
       
     }
@@ -70,8 +71,6 @@ class Incidencia extends ModeloBase
     }
     public function search($id){
         $db = new ModeloBase();
-        $sql = "SELECT practicantes.id,practicantes.name,practicantes.paterno 
-        FROM practicantes WHERE practicantes.id = $id ";
         return $db->edit('practicantes', $id);
       
     }

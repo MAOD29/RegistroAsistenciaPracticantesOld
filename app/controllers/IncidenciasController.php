@@ -57,11 +57,36 @@ class IncidenciasController
         require_once('./views/incidencias/edit.php');
         require_once('./views/layouts/footer.php');
     }
-    public function update(){
 
+    public function update($datos){
+        $validate = new Request(); 
+        $errores = $validate->validateincidencia($datos);
+       
+        if(empty($errores)){
+            $incidencia = new Incidencia;
+            $incidencia = $incidencia->updateincidencia($datos);
+            if(!$incidencia){
+                $_SESSION['mensaje'] = "error en actualizacion";
+                session_destroy();   
+            }
+            header('Location: index.php?page=incidencia');
+            $_SESSION['mensaje'] = "actualizacion correcta";
+            session_destroy();
+        }else{
+            $_SESSION['errores'] = $errores;
+             session_destroy();
+        }
     }
-    public function destroy(){
-
+    public function destroy($id){
+        $incidencia = new Incidencia();
+        if($incidencia->destroyincidencia($id)){
+            $_SESSION['mensaje'] = "Incidencia eliminada correctamente";
+            header('Location: index.php?page=incidencia');
+            session_destroy();
+        }else {
+            $_SESSION['mensaje'] = "Error al eliminar";
+             session_destroy();
+        }
     }
     public function search(){
         $id =$_GET['search'];

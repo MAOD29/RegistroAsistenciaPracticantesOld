@@ -9,7 +9,7 @@ class Asistencia extends ModeloBase
     public function indexasistencia($search, $dateInicio, $dateEnd,$startOfPaging,$amountOfThePaging) {
         $db = new ModeloBase();
 
-        $sql = "SELECT practicantes.id,practicantes.name,asistencias.fecha,asistencias.hora_entrada, asistencias.hora_salida, asistencias.horast
+        $sql = "SELECT practicantes.id,practicantes.name,asistencias.fecha,asistencias.hora_entrada, asistencias.hora_salida, asistencias.horast,asistencias.id as id_asistencia
         FROM asistencias
         left JOIN practicantes";
 
@@ -35,13 +35,13 @@ class Asistencia extends ModeloBase
         }
 
     }
-    public function editasistencia($id,$fecha){
+    public function editasistencia($id){
         $db = new ModeloBase();
-        $fecha=str_replace('-', '',$fecha);
+      
         $sql = "SELECT asistencias.id,practicantes.name,asistencias.fecha,asistencias.hora_entrada, asistencias.hora_salida
         FROM asistencias
         left JOIN practicantes
-        ON asistencias.id_practicante = practicantes.id  Where practicantes.id = $id and asistencias.fecha = $fecha";
+        ON asistencias.id_practicante = practicantes.id  Where asistencias.id = $id ";
 
         return $db->show($sql);
       
