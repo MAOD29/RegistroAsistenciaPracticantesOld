@@ -24,12 +24,13 @@
     </div>
   </div>
   <br><br>
-  <table class="table">
+  <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Usuario</th>
+        
         <th>Nombre</th>
         <th>Departamento</th>
+        <th>Usuario</th>
         <th>email</th>
         <th>Telefono</th>
         <th>Acciones</th>
@@ -39,14 +40,16 @@
       <?php if (!empty($users)): ?>
         <?php foreach ($users as $u): ?>
           <tr>
-            <td> <?php echo $u['user'] ?> </td>
+         
             <td><?php echo $u['name'] ?></td>
             <td><?php echo $u['department'] ?></td>
+            <td> <?php echo $u['user'] ?> </td>
             <td><?php echo $u['email'] ?></td>
             <td><?php echo $u['phone'] ?></td>
             <td>
               <a href="index.php?page=editusuario&id=<?php echo $u['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar</a>
-              <button type="button" class=" btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+
+              <button type="button" class=" btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal<?php echo $u['id'] ?>">
                 Eliminar
               </button>
             </td>
@@ -75,7 +78,8 @@
   <?php endif; ?>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<?php foreach ($users as $u): ?>
+<div class="modal fade" id="modal<?php echo $u['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -86,10 +90,12 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <form style="display: inline;" method="POST" action="index.php?page=usuario&id=<?php echo $u['id'] ?>" >
-        <button type="submit" id="delete" class=" btn btn-danger"  name="eliminar">Eliminar</button>
-        </form>
+       
+          <form style="display: inline;" method="POST" action="index.php?page=usuario&id=<?php echo $u['id'] ?>" >
+          <button type="submit" id="delete" class=" btn btn-danger"  name="eliminar">Eliminar</button>
+          </form>
       </div>
     </div>
   </div>
 </div>
+<?php endforeach; ?>

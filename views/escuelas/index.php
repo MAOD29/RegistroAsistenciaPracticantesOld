@@ -45,7 +45,7 @@
                         <td><?php echo $s['encargado'] ?></td>
                         <td>
                             <a href="index.php?page=editescuela&id=<?php echo $s['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar</a>
-                            <button type="button" class=" btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal">
+                            <button type="button" class=" btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal<?php echo $s['id'] ?>">
                                 Eliminar
                             </button>
                         </td>
@@ -75,9 +75,9 @@
     <?php endif; ?>
 
 </div>
-
+<?php foreach ($schools as $s): ?>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal<?php echo $s['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -95,3 +95,4 @@
     </div>
   </div>
 </div>
+<?php endforeach; ?>

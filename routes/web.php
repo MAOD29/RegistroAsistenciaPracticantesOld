@@ -47,6 +47,8 @@ if (!empty($page)) {
     'createincidencia' => array('model' => 'Incidencia', 'view' => 'create', 'controller' => 'IncidenciasController'),
     #modificar escuela
     'editincidencia' => array('model' => 'Incindencia', 'view' => 'edit', 'controller' => 'IncidenciasController'),
+    #modificar escuela
+    'showincidencia' => array('model' => 'Incindencia', 'view' => 'show', 'controller' => 'IncidenciasController'),
     #search 
     'searchincidencia' => array('model' => 'Incindencia', 'view' => 'search', 'controller' => 'IncidenciasController'),
     

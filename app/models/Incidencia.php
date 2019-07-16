@@ -15,12 +15,23 @@ class Incidencia extends ModeloBase
         if(empty($search)){
             $sql .= " ON incidencias.id_practicante = practicantes.id LIMIT $startOfPaging,$amountOfThePaging";
         }else{
-            $sql .= " ON incidencias.id_practicante = practicantes.id Where practicantes.id = $search LIMIT $startOfPaging,$amountOfThePaging";
+            $sql .= " ON incidencias.id_practicante = practicantes.id WHERE  practicantes.name LIKE  '$search%' OR practicantes.id LIKE  '$search%' LIMIT $startOfPaging,$amountOfThePaging";
         }
         return  $db->index($sql);
      
     }
 
+    public function showincidencia($id){
+        $db = new ModeloBase();
+
+        $sql = "SELECT practicantes.id,practicantes.name,practicantes.paterno,practicantes.materno,incidencias.titulo,incidencias.descripcion,incidencias.date,incidencias.id as id_incidencia
+        FROM incidencias
+        left JOIN practicantes
+        ON incidencias.id_practicante = practicantes.id WHERE incidencias.id = $id ";
+
+        return $db->show($sql);
+      
+    }
   
     public function storeincidencia($datos){
 

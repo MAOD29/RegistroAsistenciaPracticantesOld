@@ -29,6 +29,17 @@ class IncidenciasController
     public function create(){
         require_once "views/layouts/header.php";
         require_once "views/incidencias/create.php";
+        require_once('./views/layouts/footer.php');
+    }
+    public function show(){
+        $id =$_GET['id'];
+
+        $incidencia = new Incidencia();
+        $incidencia = $incidencia->showincidencia($id);
+        
+        require_once('./views/layouts/header.php');
+        require_once('./views/incidencias/show.php');
+        require_once('./views/layouts/footer.php');
     }
     public function store($datos){
         $validate = new Request(); 
