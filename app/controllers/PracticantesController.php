@@ -27,10 +27,7 @@ class PracticantesController {
         require_once('./views/practicantes/index.php');
         require_once('./views/layouts/footer.php');
     }
-    public function show(){
-       
-        
-    }
+   
     public function create(){
         $options = new Practicante();
         $schools = $options->getAll('escuelas');
@@ -41,6 +38,18 @@ class PracticantesController {
         require_once('./views/layouts/footer.php');
     }
     
+    public function show(){
+        $id =$_GET['id'];
+      
+        $student = new Practicante();
+        $schools = $student->getAll('escuelas');
+        $advisers = $student->getAll('usuarios');
+        $student = $student->showstudent($id);
+        
+        require_once('./views/layouts/header.php');
+        require_once('./views/practicantes/show.php');
+        require_once('./views/layouts/footer.php');
+    }
     public function store($datos){
         #refactor this
         $validate = new Request(); 

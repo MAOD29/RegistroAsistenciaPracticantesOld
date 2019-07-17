@@ -29,6 +29,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>ID</th>
         <th>Nombre</th>
         <th>Apellidos</th>
         <th>email</th>
@@ -41,15 +42,16 @@
       <?php if (!empty($students)): ?>
         <?php foreach ($students as $student): ?>
           <tr>
+          <td> <?php echo $student['id'] ?> </td>
             <td> <?php echo $student['name'] ?> </td>
             <td><?php echo $student['paterno'] ?></td>
             <td><?php echo $student['phone'] ?></td>
             <td><?php echo $student['email'] ?></td>
             <td><?php echo $student['id_school'] ?></td>
             <td>
-              <a 
-                href="index.php?page=editstudent&id=<?php echo $student['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar
-              </a>
+                <a href="index.php?page=showstudent&id=<?php echo $student['id'] ?>" class='btn btn-outline-info btn-sm'>Ver</a>
+                <a href="index.php?page=editstudent&id=<?php echo $student['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar
+                </a>
               <button type="button" class=" btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal<?php echo $student['id'] ?>">
                 Eliminar
               </button>

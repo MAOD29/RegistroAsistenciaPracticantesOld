@@ -26,6 +26,10 @@ class Practicante extends ModeloBase
         }
         
     }
+    public function showstudent($id){
+        $db = new ModeloBase();
+        return $db->edit('practicantes', $id);
+    }
     public function editstudent($id){
         $db = new ModeloBase();
         return $db->edit('practicantes', $id);

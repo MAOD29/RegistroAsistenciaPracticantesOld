@@ -25,7 +25,9 @@ if (!empty($page)) {
     #edit practicante
     'editstudent' => array('model' => 'Practicante', 'view' => 'edit', 'controller' => 'PracticantesController'),
      #delete practicante
-     'deletestudent' => array('model' => 'Practicante', 'view' => 'edit', 'controller' => 'PracticantesController'),
+     'deletestudent' => array('model' => 'Practicante', 'view' => 'delete', 'controller' => 'PracticantesController'),
+     #show practicantes
+     'showstudent' => array('model' => 'Practicante', 'view' => 'show', 'controller' => 'PracticantesController'),
     ////////////////////////////////////////////////////////////////////
     #index escuelas
     'escuela' => array('model' => 'Escuela', 'view' => 'index', 'controller' => 'EscuelasController'),
