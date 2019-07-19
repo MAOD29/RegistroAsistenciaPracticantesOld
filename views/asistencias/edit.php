@@ -8,6 +8,7 @@
             'id' => $_GET['id'],
             'hora_entrada' => $_POST['hora_entrada'],
             'hora_salida' => $_POST['hora_salida'],
+            
         );
         $asistenciaUpdate->update($datos);
     }
@@ -59,5 +60,4 @@
         <?php if (isset($_SESSION['mensaje'])): ?>
             <div class='alert alert-primary' role='alert'><? $_SESSION['mensaje'] ?></div>
         <?php endif;  ?>
-    </form>
 </div>

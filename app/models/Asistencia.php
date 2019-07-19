@@ -1,5 +1,6 @@
 <?php
 require_once 'ModeloBase.php';
+require_once "app/models/Practicante.php";
 class Asistencia extends ModeloBase
 {
     public function __construct(){
@@ -38,7 +39,7 @@ class Asistencia extends ModeloBase
     public function editasistencia($id){
         $db = new ModeloBase();
       
-        $sql = "SELECT asistencias.id,practicantes.name,asistencias.fecha,asistencias.hora_entrada, asistencias.hora_salida
+        $sql = "SELECT asistencias.id,practicantes.name,asistencias.fecha,asistencias.hora_entrada, asistencias.hora_salida,practicantes.id as id_practicante,practicantes.horas_actuales
         FROM asistencias
         left JOIN practicantes
         ON asistencias.id_practicante = practicantes.id  Where asistencias.id = $id ";
@@ -116,21 +117,21 @@ class Asistencia extends ModeloBase
 
     }
 
-    public function updatea($datos){
-      
-        $salida =  new DateTime($datos['hora_entrada']);
-        $entrada = new DateTime($datos['hora_salida']);
-        $horast = $salida->diff($entrada);
-
-        $datos['horast'] = $horast->format('%H');
-        $db = new ModeloBase();
+    public function updatea($datosUpdate){
+        $status = false;
+        $db = new ModeloBase(); 
+        
         $sql = "UPDATE asistencias SET hora_entrada=:hora_entrada,hora_salida=:hora_salida, horast=:horast WHERE id=:id";
-        
-       return  $db->update($sql, $datos);
-
-        
-      
+        $sqlhoras = "UPDATE practicantes SET horas_actuales=:horas_actuales WHERE id=:id;";
+        if($db->update($sql, $datosUpdate)){
+            $status = true;
+        }else{
+            $status = false;
+            $_SESSION['mensaje'] = "error en actualizacion de nueva hora de entra o salida";
+        }
        
+      
+     return $status;
     }
     
     

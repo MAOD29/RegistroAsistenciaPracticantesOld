@@ -21,6 +21,7 @@
             'birth' => $_POST['birth'],
             'id_adviser' => $_POST['id_adviser'],
             'id_school' => $_POST['id_school'],
+            'horas_totales' => $_POST['horas_totales'],
           );
         
         $studentUpdate->update($datos);

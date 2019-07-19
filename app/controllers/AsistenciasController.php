@@ -44,23 +44,19 @@ class AsistenciasController {
          if(!empty($errores)){
             header('Location: index.php?page=createasistencia');  
          }
-
          $asistencia = new Asistencia();
          $student = $asistencia->storeorupdate($datos);
+        
 
          if($student){
+            $_SESSION['student'] = $student;
            
-            $_SESSION['mensaje'] = "correcto";
             session_destroy();
         
         }else{
             $_SESSION['mensaje'] = "error en actualizacion";
             session_destroy();
         }
-             
-         
-         
-        
     }
     public function edit(){
        
@@ -75,9 +71,19 @@ class AsistenciasController {
     }
 
     public function update($datos){
-       
+        
+        $salida =  new DateTime($datos['hora_salida']);
+        $entrada = new DateTime($datos['hora_entrada']);
+        $horast = $salida->diff($entrada);
+
+        $datosUpdate['id'] = $datos['id'];
+        $datosUpdate['hora_entrada'] = $datos['hora_entrada'];
+        $datosUpdate['hora_salida'] = $datos['hora_salida'];
+        $datosUpdate['horast'] = $horast->format('%H');
+
         $asistencia = new Asistencia;
-        $asistencia = $asistencia->updatea($datos);
+        $asistencia = $asistencia->updatea($datosUpdate);
+
         if($asistencia){
             header('Location: index.php?page=asistencia');
             $_SESSION['mensaje'] = "correcto";

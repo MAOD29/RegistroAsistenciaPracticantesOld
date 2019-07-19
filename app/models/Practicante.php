@@ -37,7 +37,8 @@ class Practicante extends ModeloBase
     }
     public function updatestudent($datos){
         $db = new ModeloBase();
-        $sql = "UPDATE practicantes SET name=:name, paterno=:paterno, materno=:materno, email=:email, phone=:phone,address=:address, img_perfil=:img_perfil,birth=:birth,id_adviser=:id_adviser,id_school=:id_school  WHERE id=:id;";
+
+        $sql = "UPDATE practicantes SET name=:name, paterno=:paterno, materno=:materno, email=:email, phone=:phone,address=:address, img_perfil=:img_perfil,birth=:birth,id_adviser=:id_adviser,id_school=:id_school,horas_totales=:horas_totales  WHERE id=:id;";
 
         return $db->update($sql,$datos);
     }

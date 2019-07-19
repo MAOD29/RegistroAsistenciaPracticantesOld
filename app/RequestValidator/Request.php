@@ -39,10 +39,12 @@ class Request extends Validator
         $errores = $this->require($datos);
         $email = $this->validate_email($datos['email']);
         $phone = $this->validate_telefono($datos['phone']);
-      
+        $horat = $this->validar_entero($datos['horas_totales']);
      
         if($email) $errores['email'] = $email;
         if($phone) $errores['phone'] = $phone;
+        if($horat) $errores['horas_totales'] = $horat;
+
       
 
        return $errores;

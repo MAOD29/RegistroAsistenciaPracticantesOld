@@ -111,8 +111,15 @@ $error = function ($field) {
     </div>
 </div>
 <br>
-
-
+<div class="row fuente">
+    <div class="col-4">
+        <label for="horas_totales">Horas totales</label>
+        <input class="form-control" type="text" name="horas_totales" value="<?php if (isset($student['horas_totales'])) echo $student['horas_totales']; ?>" placeholder="Ingrese las horas de practica">
+        <span class="error"><?php echo $error('horas_totales') ?></span>
+    </div>
+    
+</div>
+<br>
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
