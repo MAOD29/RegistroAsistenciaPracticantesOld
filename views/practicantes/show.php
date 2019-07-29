@@ -66,7 +66,7 @@
             <th>Horas Totales</th>
             <td><?php echo $student['horas_totales']; ?></td>
             <th>Horas Actuales</th>
-            <td><?php echo $student['horas_actuales']; ?></td>
+            <td>Luego lo arreglo</td>
             <th>Incidencias</th>
             <td>1</td>
         </tr>

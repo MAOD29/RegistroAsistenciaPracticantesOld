@@ -7,7 +7,7 @@ if (!empty($page)) {
 
   $router = array(
     #login
-    'login' => array('model' => 'Usuario', 'view' => 'login', 'controller' => 'UsuariosController'),
+    'login' => array('model' => 'Usuario', 'view' => 'login', 'controller' => 'LoginController'),
     #index de la pagina
     'index' => array('model' => 'Index', 'view' => 'index', 'controller' => 'IndexController'),
     /////////////////////////////////////////////////////////////

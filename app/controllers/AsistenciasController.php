@@ -5,6 +5,14 @@ require_once 'app/RequestValidator/Request.php';
 
 class AsistenciasController {
 
+    function __construct() {
+        session_start();
+        if( !isset($_SESSION['usuarioLogueado']) ){
+            header('Location: index.php?page=login');
+        }
+       
+    }
+
     public function index(){
         #incicializando los parametros
         $asistencias = new Asistencia;

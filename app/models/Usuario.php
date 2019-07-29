@@ -18,7 +18,7 @@ class Usuario extends ModeloBase {
         $db = new ModeloBase();
         $datos['id_rol'] = 2;
         $insert = $db->store('usuarios', $datos);
-        if ($insert) $_SESSION['mensaje'] = 'Registro exitoso';
+        $insert ? $_SESSION['mensaje'] = 'Registro exitoso' : $_SESSION['mensaje'] = 'Error de registro' ;
         
     }
 
@@ -48,7 +48,8 @@ class Usuario extends ModeloBase {
         $db = new ModeloBase();
         $sql = "UPDATE usuarios SET name=:name, department=:department, email=:email, phone=:phone, user=:user, password=:password WHERE id=:id;";
 
-        return $db->update($sql,$datos);
+        $update = $db->update($sql,$datos);
+        $update ? $_SESSION['mensaje'] = 'Actualización exitosa' : $_SESSION['mensaje'] = 'Error de actualización' ;
     }
     public function paginationuser($search){
 

@@ -94,9 +94,11 @@ class ModeloBase extends DB {
             }
             
         } catch (PDOException $e) {
-            $_SESSION['mensaje'] = $e->getMessage();
+            return false;
+            //$_SESSION['mensaje'] = $e->getMessage();
         } catch (Exception $e) {
-            $_SESSION['mensaje'] = $e->getMessage();
+            return false;
+           // $_SESSION['mensaje'] = $e->getMessage();
         }
     }
     public function pagination($sql){
