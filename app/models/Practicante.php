@@ -40,7 +40,8 @@ class Practicante extends ModeloBase
 
         $sql = "UPDATE practicantes SET name=:name, paterno=:paterno, materno=:materno, email=:email, phone=:phone,address=:address, img_perfil=:img_perfil,birth=:birth,id_adviser=:id_adviser,id_school=:id_school,horas_totales=:horas_totales  WHERE id=:id;";
 
-        return $db->update($sql,$datos);
+        $update = $db->update($sql,$datos);
+        $update ? $_SESSION['mensaje'] = "actualizacion correcta" : $_SESSION['mensaje'] = "actualizacion fallida";
     }
     public function destroystudent($id){
         $db = new ModeloBase();

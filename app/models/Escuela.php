@@ -37,7 +37,8 @@ class Escuela extends ModeloBase
         $db = new ModeloBase();
         $sql = "UPDATE escuelas SET name=:name, direccion=:direccion, email=:email, phone=:phone, encargado=:encargado  WHERE id=:id;";
 
-        return $db->update($sql,$datos);
+        $update = $db->update($sql,$datos);
+        $update ? $_SESSION['mensaje'] = 'Actualización exitosa' : $_SESSION['mensaje'] = 'Error de actualización' ;
     }
     public function destroyschool($id){
         $db = new ModeloBase();

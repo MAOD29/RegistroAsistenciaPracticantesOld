@@ -1,24 +1,16 @@
-<?php
-    require_once 'app/controllers/EscuelasController.php';
-    $school = new EscuelasController();
-    session_start();
-    if(isset($_POST['eliminar'])){
-        $id =  $_GET['id'];
-        $school->destroy($id);
-    }
-?>
+
 <div class="container">
     <h1>Escuela</h1>
     <div class="row" >
         <div class="col-8">
-            <a href="index.php?page=createescuela" class="btn btn-success pull-rigth ">Crear escuela</a>
+            <a href="<?php echo constant('URL'); ?>escuelas/create" class="btn btn-success pull-rigth ">Crear escuela</a>
         </div>
         <div class="ml-auto col-4 ">
-            <form method="GET" action="index.php" autocomplete="off"> 
+            <form method="GET" action="<?php echo constant('URL'); ?>escuelas/index" autocomplete="off"> 
                 <label for="search" >
                     <input class="form-control" type="text" name="search" placeholder="Indicio de busqueda">
                 </label>
-                <input class="btn btn-primary" type="submit" name="page" value="escuela">
+               <button class="btn btn-primary" >Buscar</button>
             </form>
         </div>
     </div>
@@ -35,8 +27,8 @@
             </tr> 
         </thead>
         <tbody>
-            <?php if (!empty($schools)): ?>
-                <?php foreach ($schools as $s): ?>
+            <?php if (!empty($this->schools)): ?>
+                <?php foreach ($this->schools as $s): ?>
                     <tr>
                         <td> <?php echo $s['name'] ?> </td>
                         <td><?php echo $s['direccion'] ?></td>
@@ -44,7 +36,7 @@
                         <td><?php echo $s['email'] ?></td>
                         <td><?php echo $s['encargado'] ?></td>
                         <td>
-                            <a href="index.php?page=editescuela&id=<?php echo $s['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar</a>
+                            <a href="<?php echo constant('URL'); ?>escuelas/edit&id=<?php echo $s['id'] ?>" class='btn btn-outline-primary btn-sm'>Editar</a>
                             <button type="button" class=" btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal<?php echo $s['id'] ?>">
                                 Eliminar
                             </button>
@@ -57,9 +49,9 @@
     <!--Pagination -->
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
-            <?php for($i=1; $i<=$section; $i++):  ?>
+            <?php for($i=1; $i<=$this->section; $i++):  ?>
             <li class="page-item">
-                <a class="page-link" href="index.php?page=escuela&search=<?php echo $search ?>&p=<?php echo $i ?>">
+                <a class="page-link" href="<?php echo constant('URL'); ?>escuelas/index?search=<?php echo $this->search ?>&p=<?php echo $i ?>">
                     <?php echo $i ?>
                 </a>
             </li>
@@ -75,7 +67,7 @@
     <?php endif; ?>
 
 </div>
-<?php foreach ($schools as $s): ?>
+<?php foreach ($this->schools as $s): ?>
 <!-- Modal -->
 <div class="modal fade" id="modal<?php echo $s['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -88,7 +80,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-		<form style="display: inline;" method="POST" action="index.php?page=escuela&id=<?php echo $s['id'] ?>" >
+		<form style="display: inline;" method="POST" action="<?php echo constant('URL'); ?>escuelas/destroy&id=<?php echo $s['id'] ?>" >
         <button type="submit" id="delete" class=" btn btn-danger"  name="eliminar">Eliminar</button>
         </form>
       </div>

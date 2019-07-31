@@ -26,7 +26,8 @@ class Usuarios extends Controller
         if (isset($_GET['p'])) $startOfPaging = $utilities->pagination($_GET['p'], $amountOfThePaging);
         #asignando la busqueda si existe
         if (isset($_GET['search'])) $search =  $_GET['search'];
-
+        
+        $this->view->search = $search;
         $this->view->section = $users->paginationuser($search);
         $this->view->users = $users->indexuser($search, $startOfPaging, $amountOfThePaging);
 

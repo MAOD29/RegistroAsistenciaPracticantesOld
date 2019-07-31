@@ -39,7 +39,7 @@ class Asistencia extends ModeloBase
     public function editasistencia($id){
         $db = new ModeloBase();
       
-        $sql = "SELECT asistencias.id,practicantes.name,asistencias.fecha,asistencias.hora_entrada, asistencias.hora_salida,practicantes.id as id_practicante,practicantes.horas_actuales
+        $sql = "SELECT asistencias.id,practicantes.name,asistencias.fecha,asistencias.hora_entrada, asistencias.hora_salida,practicantes.id as id_practicante
         FROM asistencias
         left JOIN practicantes
         ON asistencias.id_practicante = practicantes.id  Where asistencias.id = $id ";
@@ -78,7 +78,7 @@ class Asistencia extends ModeloBase
         $sql = "SELECT COUNT(id) FROM asistencias";
         
         if(!empty($search)){
-            $sql = "SELECT COUNT(name) FROM asistencias  WHERE name LIKE  '$search%' ";
+            $sql = "SELECT COUNT(id) FROM asistencias  WHERE id_practicante = $search ";
         }
         $number_of_rows = $db->pagination($sql);
         $section = ceil($number_of_rows / 5);
@@ -123,15 +123,13 @@ class Asistencia extends ModeloBase
         
         $sql = "UPDATE asistencias SET hora_entrada=:hora_entrada,hora_salida=:hora_salida, horast=:horast WHERE id=:id";
         $sqlhoras = "UPDATE practicantes SET horas_actuales=:horas_actuales WHERE id=:id;";
-        if($db->update($sql, $datosUpdate)){
-            $status = true;
+        if($db->update($sql, $datosUpdate)){ 
+            $_SESSION['mensaje'] = "Actualizacion correcta";
         }else{
-            $status = false;
             $_SESSION['mensaje'] = "error en actualizacion de nueva hora de entra o salida";
         }
        
-      
-     return $status;
+ 
     }
     
     
