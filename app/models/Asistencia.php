@@ -1,5 +1,4 @@
 <?php
-require_once 'ModeloBase.php';
 require_once "app/models/Practicante.php";
 class Asistencia extends ModeloBase
 {
@@ -8,7 +7,6 @@ class Asistencia extends ModeloBase
     }
 
     public function indexasistencia($search, $dateInicio, $dateEnd,$startOfPaging,$amountOfThePaging) {
-        $db = new ModeloBase();
 
         $sql = "SELECT practicantes.id,practicantes.name,asistencias.fecha,asistencias.hora_entrada, asistencias.hora_salida, asistencias.horast,asistencias.id as id_asistencia
         FROM asistencias
@@ -23,14 +21,13 @@ class Asistencia extends ModeloBase
             ON asistencias.id_practicante = practicantes.id WHERE asistencias.fecha 
             BETWEEN $dateInicio AND $dateEnd AND practicantes.id = $search LIMIT $startOfPaging,$amountOfThePaging";
         }
-        return  $db->index($sql);
+        return  $this->index($sql);
      
     }
 
     public function storeasistencia($datos){
         
-        $db = new ModeloBase();
-        $insert = $db->store('asistencias', $datos);
+        $insert = $this->store('asistencias', $datos);
         if ($insert) {
             $_SESSION['mensaje'] = 'Bienvenido que tenga un buen día';
         }

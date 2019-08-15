@@ -1,6 +1,6 @@
 <?php
-require_once 'ModeloBase.php';
-class Practicante extends ModeloBase
+require_once 'app/models/ModeloBase.php';
+class Practicante  extends ModeloBase
 {
     public function __construct(){
         parent::__construct();

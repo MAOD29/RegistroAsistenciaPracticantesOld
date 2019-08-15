@@ -1,13 +1,22 @@
 <?php
 
 class DB {
-    private static $hostname = 'localhost';
-    private static $gestor = 'mysql';
-    private static $database = 'prueba';
-    private static $db_user = 'root';
-    private static $db_password = '';
-    private static $db_charset = 'utf8';
+    private static $hostname;
+    private static $gestor;
+    private static $database;
+    private static $db_user;
+    private static $db_password;
+    private static $db_charset;
     private  $conexion;
+
+    public function __construct(){
+        self::$hostname = constant('HOST');
+        self::$gestor = constant('GESTOR');
+        self::$database = constant('DB');
+        self::$db_user  = constant('USER');
+        self::$db_password = constant('PASSWORD');
+        self::$db_charset = constant('CHARSET');
+    }
 
 
     public function conexion (){

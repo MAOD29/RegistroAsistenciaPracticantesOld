@@ -57,7 +57,7 @@ class Usuarios extends Controller
             if (!empty($_POST['password']) && strlen($_POST['password']) >= 7)  $datos['password'] = md5($_POST['password']);
             $validate = new Request();
             $errores = $validate->validateuser($datos);
-
+ 
             if (!empty($errores)) {
                 $_SESSION['errores'] = $errores;
                 $this->view->render('usuarios/create');
@@ -79,7 +79,7 @@ class Usuarios extends Controller
     {
 
         $id = $_GET['id'];
-        $user = new Usuario();
+        $user = new Usuariosd();
         $this->view->user = $user->edituser($id);
         $this->view->render('usuarios/edit');
         unset($_SESSION['mensaje']);

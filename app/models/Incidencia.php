@@ -1,5 +1,5 @@
 <?php
-require_once 'ModeloBase.php';
+require_once 'app/models/ModeloBase.php';
 class Incidencia extends ModeloBase
 {
     public function __construct()
@@ -17,7 +17,7 @@ class Incidencia extends ModeloBase
         if (empty($search)) {
             $sql .= " ON incidencias.id_practicante = practicantes.id LIMIT $startOfPaging,$amountOfThePaging";
         } else {
-            $sql .= " ON incidencias.id_practicante = practicantes.id WHERE  practicantes.name LIKE  '$search%' OR practicantes.id =  $search LIMIT $startOfPaging,$amountOfThePaging";
+            $sql .= " ON incidencias.id_practicante = practicantes.id WHERE  practicantes.name LIKE  '$search%' OR practicantes.id =  {$search} LIMIT $startOfPaging,$amountOfThePaging";
         }
         return  $db->index($sql);
     }

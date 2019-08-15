@@ -12,7 +12,7 @@
 
 <body>
     <div class="container">
-        <a class="btn btn-success" href="index.php?page=createasistencia">IR A RELOJ</a>
+        <a class="btn btn-success" href="<?php echo constant('URL'); ?>asistencias/create">IR A RELOJ</a>
     </div>
     <div class="container">
         <form action="<?php echo constant('URL'); ?>login/loginAcceso" method="POST">

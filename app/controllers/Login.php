@@ -33,4 +33,10 @@ class Login extends Controller
         
         
     }
+    public function logout()
+    {
+        session_destroy();
+        $url = constant('URL')."login/render";
+        header("Location: $url");   
+    }
 }

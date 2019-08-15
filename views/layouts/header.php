@@ -23,6 +23,7 @@
             <li class="li"><a class="a" href="<?php echo constant('URL'); ?>incidencias/index"><i class="icono izquierda  fab fa-font-awesome-flag"></i> Incidencias</a></li>
             <li class="li"><a class="a" href="<?php echo constant('URL'); ?>escuelas/index"> <i class="icono izquierda fas fa-school"></i> Escuelas</a></li>
             <li class="li"><a class="a" href="<?php echo constant('URL'); ?>usuarios/index"> <i class="icono izquierda fas fa-user-graduate"></i> Asesores</a></li>
+            <li class="li"><a class="a" href="<?php echo constant('URL'); ?>login/logout"> <i class="icono izquierda fas fa-user-graduate"></i> Logout</a></li>
         </ul>
     </nav>
 

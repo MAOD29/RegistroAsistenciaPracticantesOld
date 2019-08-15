@@ -1,12 +1,11 @@
 <?php
 
-require_once 'database/BD.php';
-
 class ModeloBase extends DB
 {
 
-    public function __construct()
-    { }
+    public function __construct(){
+        parent::__construct();
+    }
 
     public function store($table, $datos)
     {
@@ -87,7 +86,6 @@ class ModeloBase extends DB
     {
         $conexion = parent::conexion();
         try {
-
             $pdo = $conexion->prepare($sql)->execute($datos);
             return $pdo ? $pdo : false;
         } catch (PDOException $e) {

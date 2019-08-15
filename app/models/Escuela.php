@@ -1,5 +1,5 @@
 <?php
-require_once 'ModeloBase.php';
+require_once 'app/models/ModeloBase.php';
 class Escuela extends ModeloBase
 {
     public function __construct(){

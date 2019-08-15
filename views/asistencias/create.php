@@ -1,17 +1,4 @@
 <?php
-require_once 'app/controllers/AsistenciasController.php';
-$asistencia = new AsistenciasController();
-session_start();
-if (isset($_POST['id_practicante'])) {
-    $fecha = new  DateTime('now');
-    $datos = [
-        'fecha' => $fecha->format('Y-m-d'),
-        'hora_entrada' => $fecha->format('H:i'),
-        'id_practicante' => $_POST['id_practicante']
-    ];
-    $asistencia->store($datos);
-}
-
 
 if (isset($_SESSION['student'])) {
     $student = $_SESSION['student'];
@@ -26,10 +13,10 @@ if (isset($_SESSION['student'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <?php if (isset($_SESSION['student']) || isset($_SESSION['exist'])) : ?>
-        <meta charset="UTF-8" http-equiv="refresh" content="5;index.php?page=createasistencia">
+        <meta charset="UTF-8" http-equiv="refresh" content="5;<?php echo constant('URL'); ?>asistencias/create">
     <?php endif; ?>
-    <link rel="stylesheet" href="./asset/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./asset/css/style.css">
+    <link rel="stylesheet" href="../asset/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../asset/css/style.css">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -39,7 +26,7 @@ if (isset($_SESSION['student'])) {
 
 <body>
     <li class="active list-unstyled components">
-        <a href="/"><i class="fas fa-home fa-5x"></i></a>
+        <a href="<?php echo constant('URL'); ?>"><i class="fas fa-home fa-5x"></i></a>
     </li>
     <main class="container">
         <?php if (isset($student)) : ?>
@@ -68,7 +55,7 @@ if (isset($_SESSION['student'])) {
                     <span id="liveclock"></span>
                 </div>
                 <div class="form-group ">
-                    <form method="POST" action="index.php?page=createasistencia">
+                    <form method="POST" action="<?php echo constant('URL'); ?>asistencias/store">
                         <input class="form-control" type="text" name="id_practicante">
                         <br>
                     </form>

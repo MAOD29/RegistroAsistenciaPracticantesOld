@@ -10,14 +10,15 @@ class Asistencias extends Controller
     {
         parent::__construct();
         session_start();
-        if (!isset($_SESSION['usuarioLogueado'])) {
-            $url = constant('URL') . "login/render";
-            header("Location: $url");
-        }
+       
     }
 
     public function index()
     {
+        if (!isset($_SESSION['usuarioLogueado'])) {
+            $url = constant('URL') . "login/render";
+            header("Location: $url");
+        }
         #incicializando los parametros
         $asistencias = new Asistencia;
         $utilities = new Utilidades();
@@ -49,34 +50,44 @@ class Asistencias extends Controller
 
     public function create()
     {
-        $this->view->render('asistencias/create');
+        $this->view->renderOther('asistencias/create');
+        
         unset($_SESSION['mensaje']);
     }
 
-    public function store($datos)
+    public function store()
     {
 
-        $validate = new Request();
-        $errores = $validate->validateasistencia($datos);
-        if (!empty($errores)) {
-            header('Location: index.php?page=createasistencia');
+        if (isset($_POST['id_practicante'])) {
+            $fecha = new  DateTime('now');
+            $datos = [
+                'fecha' => $fecha->format('Y-m-d'),
+                'hora_entrada' => $fecha->format('H:i'),
+                'id_practicante' => $_POST['id_practicante']
+            ];
+          
+            $validate = new Request();
+            $errores = $validate->validateasistencia($datos);
+            if (!empty($errores)) {
+                $url = constant('URL') . "login/render";
+                header("Location: $url");
+            }
+            $asistencia = new Asistencia();
+            $student = $asistencia->storeorupdate($datos);
+            if ($student) {
+                $_SESSION['student'] = $student;
+                $this->view->renderOther('asistencias/create');
+                session_destroy();
+            }
         }
-        $asistencia = new Asistencia();
-        $student = $asistencia->storeorupdate($datos);
-
-
-        if ($student) {
-            $_SESSION['student'] = $student;
-
-            session_destroy();
-        } else {
-            $_SESSION['mensaje'] = "error en actualizacion";
-            session_destroy();
-        }
+       
     }
     public function edit()
     {
-
+        if (!isset($_SESSION['usuarioLogueado'])) {
+            $url = constant('URL') . "login/render";
+            header("Location: $url");
+        }
         $id = $_GET['id'];
         $asistencia = new Asistencia();
         $asistencia = $asistencia->editasistencia($id);
@@ -86,6 +97,10 @@ class Asistencias extends Controller
 
     public function update()
     {
+        if (!isset($_SESSION['usuarioLogueado'])) {
+            $url = constant('URL') . "login/render";
+            header("Location: $url");
+        }
         $url = constant('URL') . "asistencias/index";
         if (isset($_POST['editar'])) {
             $datos = array(
